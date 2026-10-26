@@ -1,0 +1,13 @@
+.DS_Store
+/.build
+/.ci-dependencies
+/Packages
+xcuserdata/
+DerivedData/
+.swiftpm/configuration/registries.json
+.swiftpm/configuration/mirrors.json
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.netrc
+
+.swiftpm/configuration/mirrors.json
+.swiftpm/security/

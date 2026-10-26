@@ -1,0 +1,25 @@
+name: Swift and disposable PostgreSQL tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Install PostgreSQL test tools
+        run: |
+          brew install postgresql@18
+          echo "$(brew --prefix postgresql@18)/bin" >> "$GITHUB_PATH"
+      - name: Verify exact source and disposable PostgreSQL
+        env:
+          DIMYMINT_EXPECTED_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python3 scripts/verify-stripe-disposable-postgres.py
